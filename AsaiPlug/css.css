@@ -1,0 +1,8 @@
+*{font-family:"微软雅黑";}
+body,ul,li,img{padding:0px;margin:0px;border:0px;list-style:none;}
+.g-lt{padding:5px 12px;font-weight:bold;border-left:#ECF6FE 1px solid;border-right:#ECF6FE 1px solid;border-top:#ECF6FE 1px solid;border-bottom:#0099FF 2px solid;background-color:#F4FBFF;}
+.g-ll{height:auto;margin-bottom:5px;border-left:#ECF6FE 1px solid;border-right:#ECF6FE 1px solid;background-color:#F4FBFF;}
+.g-ll ul{border:0px;padding:0px;margin:0px;}
+.g-ll0,.g-ll1{margin:0px;padding:5px 12px;list-style:none;border-bottom:#ECF6FE 1px solid;}
+.g-ll0{background-color:#FFFFFE;}
+.g-ll1{background-color:#F4FBFF;}

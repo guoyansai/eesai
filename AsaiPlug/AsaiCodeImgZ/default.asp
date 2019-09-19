@@ -1,0 +1,274 @@
+<%
+'调用方法，对比值【Session("AsaiCode"),Request.Cookies("AsaiCode")】
+'<img id="checkcode" src="../EESaiCodeImg/?code.jpg" style="cursor:hand;width:80px;height:20px;" alt="看不清楚？请点击刷新！" onClick="this.src=this.src+'?'+Math.random();"><a href='#' onClick="checkcode.src=checkcode.src+'?'+Math.random();" title="看不清楚，换个图片！">看不清楚，换个图片！</a><br>
+Dim EESaiBMP,CKty,tcdlen
+Call EESaiBMPs()
+CKty=0'这里修改随机码记录模式,临时数据-cookies|session|cookies+session*选择验证码编码等缓存的方式
+EESaiBMP.SessionName="AsaiCode" '验证码用Session名称
+tcdlen=left(Request.ServerVariables("QUERY_STRING"),1)
+if isnumeric(tcdlen) then
+EESaiBMP.TextLength=int(tcdlen)
+else
+Randomize
+EESaiBMP.TextLength=int(2*Rnd)+3'验证码长度
+end if
+EESaiBMP.BackColor="#006600,#663300,#0000ff,#660099,#6666ff,#ff0000,#ff00ff,#990099,#3366cc,#666633"'背景颜色,多个颜色用","分隔
+EESaiBMP.TextColor="#00ff00,#00ff00,#ffff00,#00ffff,#ffffff"'文字颜色,多个颜色用","分隔
+EESaiBMP.YawpColor=EESaiBMP.TextColor'噪波点颜色,多个颜色使用","分隔
+EESaiBMP.YawpCount=6'噪波点比例0-100
+EESaiBMP.Write()
+
+Class eesai_COM_CDBMP
+Private EESaiBMPData,EESaiBMPHead,EESaiBMPWidth,EESaiBMPHeight,EESaiBMPSize,TextDataLib,TextData,TextDataLength,SessionString
+Public SessionName,TextLength,BackColor,TextColor,YawpColor,YawpCount
+
+Public Function SetTextInfo(TextString)
+ReDim TextDataLib(0)
+TextDataLib(0)=TextString
+End Function
+
+Public Function AddTextData(TextDataString)
+TextDataLength=UBound(TextDataLib)+1
+ReDim Preserve TextDataLib(TextDataLength)
+TextDataLib(TextDataLength)=TextDataString
+End Function
+
+Private Function Getbinary(IntNumber)
+Dim IntBin0,IntBin1,IntBin2,IntBin0_,IntBin1_,IntBin2_
+IntBin0=Int(IntNumber/16777216)
+IntBin0_= IntNumber Mod 16777216
+IntBin1=Int(IntBin0_/65536)
+IntBin1_= IntBin0_ Mod 65536
+IntBin2=Int(IntBin1_/256)
+IntBin2_= IntBin1_ Mod 256
+Getbinary=ChrB(IntBin2_)&ChrB(IntBin2)&ChrB(IntBin1)&ChrB(IntBin0)
+End Function
+
+Private Function GetColadRstring(ColadRstring)
+Dim ColorArray,CALength
+ColorArray=Split(ColadRstring,",")
+CALength=UBound(ColorArray)
+GetColadRstring=ColorArray(GetRnd(0,CALength))
+End Function
+
+Private Function GetRnd(LowNumber,UpNumber)
+Randomize Timer
+GetRnd=Int((UpNumber-LowNumber+1)*Rnd+LowNumber)
+End Function
+
+Private Function FileHeader()
+Response.Expires=-1
+Response.AddHeader "Pragma","no-cache"
+Response.AddHeader "cache-ctrol","no-cache"
+Response.ContentType="Image/EESaiBMP"
+End Function
+
+Private Function SetEESaiBMPHead(EESaiBMPSize,Width,Height)
+EESaiBMPHead=ChrB(66)&ChrB(77)
+EESaiBMPHead=EESaiBMPHead&Getbinary(EESaiBMPSize+54)
+EESaiBMPHead=EESaiBMPHead&Getbinary(0)
+EESaiBMPHead=EESaiBMPHead&Getbinary(54)
+EESaiBMPHead=EESaiBMPHead&Getbinary(40)
+EESaiBMPHead=EESaiBMPHead&Getbinary(Width)
+EESaiBMPHead=EESaiBMPHead&Getbinary(Height)
+EESaiBMPHead=EESaiBMPHead&ChrB(1)&ChrB(0)
+EESaiBMPHead=EESaiBMPHead&ChrB(24)&ChrB(0)
+EESaiBMPHead=EESaiBMPHead&Getbinary(0)
+EESaiBMPHead=EESaiBMPHead&Getbinary(EESaiBMPSize)
+EESaiBMPHead=EESaiBMPHead&Getbinary(65536)
+EESaiBMPHead=EESaiBMPHead&Getbinary(65536)
+EESaiBMPHead=EESaiBMPHead&Getbinary(16777216)
+EESaiBMPHead=EESaiBMPHead&Getbinary(16777216)
+End Function
+
+Private Function GetRndTextData()
+ReDim TextData(TextLength-1)
+Dim IText
+For IText=0 To TextLength-1 Step +1
+TextData(IText)=GetColadRstring(BackColor)&" "&GetColadRstring(TextColor)&" "&ChangeShape(TextDataLib(GetRnd(1,TextDataLength)))
+SessionString=SessionString&GetTextData(IText)(4)
+Next
+End Function
+
+Private Function GetTextData(IText)
+Dim TextArray,ArrayLength,ITextData
+TextArray=Split(TextData(IText)," ")
+ArrayLength=UBound(TextArray)
+Dim TextDataArray(5)
+TextDataArray(0)=TextArray(0)
+TextDataArray(1)=TextArray(1)
+TextDataArray(2)=Len(TextArray(3))
+TextDataArray(3)=ArrayLength-2
+TextDataArray(4)=TextArray(2)
+For ITextData=3 To ArrayLength Step +1
+TextDataArray(5)=TextDataArray(5)&" "&TextArray(ITextData)
+Next
+GetTextData=TextDataArray
+End Function
+
+Private Function GetColor(ColadRstring)
+GetColor=ChrB("&H"&Mid(ColadRstring,6,2))&ChrB("&H"&Mid(ColadRstring,4,2))&ChrB("&H"&Mid(ColadRstring,2,2))
+End Function
+
+Private Function EESaiBMPColor(ColorA,ColorB)
+Dim EESaiBMPColor_(1)
+EESaiBMPColor_(0)=GetColor(ColorA)
+EESaiBMPColor_(1)=GetColor(ColorB)
+EESaiBMPColor=EESaiBMPColor_
+End Function
+
+Private Function SetEESaiBMPData()
+Dim TextInfo,FontData,I,J,K
+GetRndTextData()
+TextInfo=GetTextData(0)
+EESaiBMPHeight=TextInfo(3)
+EESaiBMPWidth=TextInfo(2)*TextLength
+EESaiBMPSize=EESaiBMPHeight*EESaiBMPWidth*3
+For I=EESaiBMPHeight To 1 Step -1
+For J=0 To TextLength -1 Step +1
+TextInfo=GetTextData(J)
+FontData=Split(TextInfo(5)," ")(I)
+For K=1 To TextInfo(2) Step +1
+If GetRnd(1,99) < YawpCount Then
+EESaiBMPData=EESaiBMPData&GetColor(GetColadRstring(YawpColor))
+Else
+EESaiBMPData=EESaiBMPData&EESaiBMPColor(TextInfo(0),TextInfo(1))(Mid(FontData,K,1))
+End If
+Next
+Next
+Next
+End Function
+
+Public Function Write()
+FileHeader()
+SetEESaiBMPData()
+SetEESaiBMPHead EESaiBMPSize,EESaiBMPWidth,EESaiBMPHeight
+Response.BinaryWrite EESaiBMPHead
+Response.BinaryWrite EESaiBMPData
+if CKty=0 or CKty=2 then Response.Cookies(SessionName)=SessionString
+if CKty=1 or CKty=2 then Session(SessionName)=SessionString
+End Function
+
+Public Function ChangeShape(psString)
+Randomize Timer
+sTemp =Split(psString, " ")
+Dim nMaxWidth, nMaxHeight : nMaxWidth =16 : nMaxHeight =20
+Dim nWidth, nHeight : nWidth =Len(sTemp(1)) : nHeight =ubound(sTemp)
+Dim nTemp, nTemp1, sTemp, sReturn, nTopStart, nCurLeft, nAspect
+nTopStart =Int((nHeight-1+1)*Rnd+1)
+nAspect =Int((2-1+1)*Rnd+1)
+nCurLeft =1
+
+Dim sFilter
+sFilter ="aJLkKfFbdDhTBpP6eQ7"
+
+If Instr(sFilter, sTemp(0)) =0 Then
+For nTemp =nTopStart To ubound(sTemp)
+If nCurLeft >7 Then
+nCurLeft =5
+For nTemp1 =nTemp to ubound(sTemp)
+If nCurLeft <1 Then Exit For
+sTemp(nTemp1) =Fill("0", int(nCurLeft /2) )&sTemp(nTemp1)
+nCurLeft =nCurLeft -1
+Next
+Exit For
+End If
+sTemp(nTemp) =Fill("0", int(nCurLeft /2) )&sTemp(nTemp)
+nCurLeft =nCurLeft +1
+Next
+Else
+For nTemp =1 to ubound(sTemp)
+If nAspect =1 Then
+sTemp(nTemp) =Fill("0", int(nCurLeft /2) )&sTemp(nTemp)
+Else
+sTemp(nTemp) =sTemp(nTemp)&Fill("0", int(nCurLeft /2) )
+If Len(sTemp(nTemp)) <nMaxWidth Then sTemp(nTemp) =Fill("0", nMaxWidth-Len(sTemp(nTemp)))&sTemp(nTemp)
+End If
+nCurLeft =nCurLeft +1
+Next
+
+End If
+
+For nTemp =1 to ubound(sTemp)
+If Len(sTemp(nTemp)) <nMaxWidth Then sTemp(nTemp) =sTemp(nTemp)&Fill("0", nMaxWidth-Len(sTemp(nTemp)))
+If sReturn <>"" Then sReturn =sReturn &" "
+sReturn =sReturn&sTemp(nTemp)
+Next
+
+nTopStart =Int(((nMaxHeight -nHeight)-1+1)*Rnd+1)
+
+For nTemp =1 to nTopStart
+sReturn =Fill("0", nMaxWidth) &" "& sReturn
+Next
+For nTemp =0 to (nMaxHeight -nHeight -nTopStart) -1
+sReturn =sReturn &" "& Fill("0", nMaxWidth)
+Next
+
+ChangeShape =sTemp(0) &" "& sReturn
+
+End Function
+
+Public Function Fill(psChar, pnWidth)
+Dim nTemp, sTemp
+For nTemp =1 To pnWidth
+sTemp =sTemp&psChar
+Next
+Fill =sTemp
+End Function
+
+
+End Class
+
+
+Sub EESaiBMPs()
+Set EESaiBMP=New eesai_COM_CDBMP
+EESaiBMP.SetTextInfo "WWW.EESai.COM"
+EESaiBMP.AddTextData "2 00111100 01111110 11100111 11000011 00000011 00000011 00000110 00001100 00011000 00110000 01100000 11111111 11111111"
+EESaiBMP.AddTextData "3 00111000 01111110 11000110 00000110 00000110 00011100 00011110 00000011 00000011 11000011 11000011 01111110 00111100"
+EESaiBMP.AddTextData "4 000001100 000011100 000011100 000111100 001101100 001101100 011001100 110001100 111111111 111111111 000001100 000001100 000001100"
+EESaiBMP.AddTextData "5 01111110 01111110 01100000 11000000 11011100 11111110 11000011 00000011 00000011 11000011 11000011 01111110 00111100"
+EESaiBMP.AddTextData "6 00111100 01111110 01100011 11000000 11000000 11011100 11111110 11100011 11000011 11000011 01100011 01111110 00111100"
+EESaiBMP.AddTextData "7 11111111 11111111 00000010 00000110 00001100 00001100 00011000 00011000 00011000 00011000 00110000 00110000 00110000"
+EESaiBMP.AddTextData "8 00111100 01111110 11000011 11000011 11000011 01111110 01111110 11000011 11000011 11000011 11000011 01111110 00111100"
+EESaiBMP.AddTextData "A 0011110000 0000110000 0001111000 0001111000 0011001100 0011001100 0011111100 0110000110 0110000110 1111001111"
+EESaiBMP.AddTextData "b 11000000 11000000 11000000 11011100 11111110 11100111 11000011 11000011 11000011 11000011 11100111 11111110 11011100"
+EESaiBMP.AddTextData "B 11111110 01100011 01100011 01100011 01111110 01100011 01100011 01100011 01100011 11111110"
+EESaiBMP.AddTextData "c 0011110 0111111 1110011 1100000 1100000 1100000 1100000 1110011 0111111 0011110"
+EESaiBMP.AddTextData "C 00111111 01100111 11000011 11000011 11000000 11000000 11000000 11000000 01100011 00111110"
+EESaiBMP.AddTextData "d 00000011 00000011 00000011 00111011 01111111 11100111 11000011 11000011 11000011 11000011 11100111 01111111 00111011"
+EESaiBMP.AddTextData "e 00111100 01111110 11100110 11000011 11111111 11111111 11000000 11100011 01111110 00111100"
+EESaiBMP.AddTextData "E 11111111 01100011 01100000 01101100 01111100 01101100 01100000 01100000 01100011 11111111"
+EESaiBMP.AddTextData "f 0001111 0011111 0011000 0011000 0011000 1111110 1111110 0011000 0011000 0011000 0011000 0011000 0011000 0011000 0111000"
+EESaiBMP.AddTextData "F 11111111 01100011 01100000 01101100 01111100 01101100 01100000 01100000 01100000 01100000"
+EESaiBMP.AddTextData "G 001111110 011001110 110000110 110000110 110000000 110011111 110000110 110000110 011000110 001111100"
+EESaiBMP.AddTextData "h 11000000 11000000 11000000 11011110 11111111 11100011 11000011 11000011 11000011 11000011 11000011 11000011 11000011"
+EESaiBMP.AddTextData "H 1111001111 0110000110 0110000110 0110000110 0111111110 0110000110 0110000110 0110000110 0110000110 1111001111"
+EESaiBMP.AddTextData "J 000111111 000001100 000001100 000001100 000001100 000001100 000001100 110001100 110001100 011111000"
+EESaiBMP.AddTextData "k 11000000 11000000 11000000 11000111 11001110 11011100 11110000 11111000 11011000 11001100 11001100 11000110 11000111"
+EESaiBMP.AddTextData "K 111111110 011001100 011011000 011011000 011110000 011110000 011011000 011001100 011000110 111100111"
+EESaiBMP.AddTextData "L 11111000 01100000 01100000 01100000 01100000 01100000 01100000 01100000 01100011 11111111"
+EESaiBMP.AddTextData "m 110111001110 111111011111 111001110011 110001100011 110001100011 110001100011 110001100011 110001100011 110001100011 110001100011"
+EESaiBMP.AddTextData "M 1110000111 0110000110 0111001110 0111001110 0111111110 0111111110 0110110110 0110110110 0110000110 1111001111"
+EESaiBMP.AddTextData "n 11011110 11111111 11100011 11000011 11000011 11000011 11000011 11000011 11000011 11000011"
+EESaiBMP.AddTextData "N 1110011111 0110000110 0111000110 0111100110 0111100110 0110110110 0110011110 0110011110 0110001110 1111100110"
+EESaiBMP.AddTextData "p 11011100 11111110 11100111 11000011 11000011 11000011 11000011 11100111 11111110 11011100 11000000 11000000 11000000 11000000"
+EESaiBMP.AddTextData "P 11111110 01100011 01100011 01100011 01100011 01111110 01100000 01100000 01100000 01100000"
+EESaiBMP.AddTextData "R 111111100 011000110 011000110 011000110 011000110 011111100 011011000 011001100 011000110 111100111"
+EESaiBMP.AddTextData "s 01111110 11111110 11000000 11100000 01111100 00011110 00000011 10000011 11111111 01111100"
+EESaiBMP.AddTextData "S 01111111 11000111 11000011 11000000 01111000 00001110 00000011 11000011 11100011 11111110"
+EESaiBMP.AddTextData "t 00110000 00110000 11111111 11111111 00110000 00110000 00110000 00110000 00110000 00110000 00111111 00011111"
+EESaiBMP.AddTextData "T 11111111 10011001 00011000 00011000 00011000 00011000 00011000 00011000 00011000 00011000"
+EESaiBMP.AddTextData "u 11000011 11000011 11000011 11000011 11000011 11000011 11000011 11000111 11111111 01111011"
+EESaiBMP.AddTextData "U 1111001111 0110000110 0110000110 0110000110 0110000110 0110000110 0110000110 0110000110 0111001110 0001111000"
+EESaiBMP.AddTextData "v 110000011 011000011 011000110 011000110 001100110 001100100 000110100 000111100 000111000 000011000"
+EESaiBMP.AddTextData "V 1111001111 0110000110 0110000110 0011001100 0011001100 0011001100 0001111000 0001111000 0000110000 0000110000"
+EESaiBMP.AddTextData "w 11000000001 11000110011 11001110011 01001010010 01001010010 01101011010 01110011110 01110001110 00110001100 00110001100"
+EESaiBMP.AddTextData "W 1110000111 1100000011 1100110011 1100110011 0111111110 0111111110 0111111110 0011001100 0011001100 0011001100"
+EESaiBMP.AddTextData "x 111000011 011000110 001101100 001111100 000111000 000111000 001111100 001001100 011000110 110000111"
+EESaiBMP.AddTextData "X 1111001111 0110000110 0011001100 0001111000 0000110000 0000110000 0001111000 0011001100 0110000110 1111001111"
+EESaiBMP.AddTextData "y 1100000011 0110000010 0110000110 0011000100 0011001100 0001101000 0001111000 0001111000 0000110000 0000110000 0001100000 0111100000 0111000000"
+EESaiBMP.AddTextData "Y 1111001111 0110000110 0011001100 0011001100 0001111000 0000110000 0000110000 0000110000 0000110000 0000110000"
+EESaiBMP.AddTextData "z 11111111 11111111 00000011 00000110 00001100 00011000 00110000 01100000 11111111 11111111"
+EESaiBMP.AddTextData "Z 11111111 11000011 00000110 00001100 00011000 00011000 00110000 01100000 11000011 11111111"
+End Sub
+%>

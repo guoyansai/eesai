@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>转载时批量上传</title>
+</head>
+
+<body>
+<script>
+//alert("http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03e1c.jpg".indexOf("://"));
+var eesdir="/AsaiUpFile/sc/";
+function EES_Piclocal(){
+var eesfnm=document.getElementById(eesfnm);
+var eesfstr=nr.value;
+var eesimg='';
+var eesimgj=0;
+var eesimgreg = /<img.*?(?:>|\/>)/gi;
+var eesscrreg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+var eesimgarr = eesfstr.match(eesimgreg);
+//alert('所有已成功匹配图片的数组：'+eesimgarr);
+for (var eesimi = 0; eesimi < eesimgarr.length; eesimi++) {
+var eesscrarr = eesimgarr[eesimi].match(eesscrreg);
+var eesscr=eesscrarr[1];
+if(eesscr.indexOf("://")>1){
+var eeshrr=eesscr.split("://");
+var eeshttp=eeshrr[0]+'://'+eeshrr[1].split("/")[0]+'/';
+var eessave=eesscr.replace(eeshttp,eesdir);
+if(eesimg.indexOf(eesscr)<0){
+//ajax上传图片
+if(window.ActiveXObject){asaiXML=new ActiveXObject("Microsoft.XMLHTTP");}
+else if(window.XMLHttpRequest){asaiXML=new window.XMLHttpRequest();}
+asaiXML.open("POST",'Default.asp?99|'+eesscr+'|'+eessave,false);
+asaiXML.send(null);
+var asaixstrq=unescape(asaiXML.responseText);
+
+if(asaixstrq=="1"){
+eesimgj=eesimgj+1;
+eesimg+='\n'+eesscr;
+eesfstr=eesfstr.replace(new RegExp(eesscr,'g'),eessave);
+}else if(asaixstrq.indexOf("注册")>0){eesimgj=-1}
+//alert('已匹配的图片地址'+(eesimi+1)+'：'+eesscr);
+}
+}
+}
+if(eesimgj<0){alert('提示:无权执行这个操作！');}
+else if(eesimgj>0){
+alert('成功上传'+eesimgj+'张图片：'+eesimg);
+nr.value=eesfstr;
+}
+}
+</script>
+<textarea id="nr" name="nr" style="width:100%; height:288px;">
+<center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937414" md5="" src="http://images.china.cn/attachement/png/site1000/20160222/b8aeed9904a81834c03e1b.png"></center><br>　　灯笼制作方法的种类多样，不但表现在基本的制作方式的多样上，同时还表现在使用的材料多样上。下面小编要分享一个十分环保的灯笼，利用一次性塑料杯子变废为宝元宵节灯笼手工制作。<br>　　先来看看成品吧！然后动手一起做一个环保的灯笼吧！<br>　　1.准备基本的材料和工具，其中就包括塑料的杯子，还有棉绳、剪刀、颜料和打孔器。<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937415" md5="" src="http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03e1c.jpg"></center><br>　　1.准备基本的材料和工具，其中就包括塑料的杯子，还有棉绳、剪刀、颜料和打孔器。<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937415" md5="" src="http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03e1c.jpg"></center><br>　　2.将两个一次性塑料杯的杯底剪裁下来。<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937416" md5="" src="http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03e1d.jpg"></center><br>　　3.接着将其涂抹上相应的颜色。<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937417" md5="" src="http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03e1e.jpg"></center><br>　　4.这个时候我们在其底部进行打孔。<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937418" md5="" src="http://images.china.cn/attachement/png/site1000/20160222/b8aeed9904a81834c03e1f.png"></center><br>　　5.同时准备好粗细适度的纸条。<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937419" md5="" src="http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03e20.jpg"></center><br>　　6.将棉绳从纸条两头穿过去。<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937420" md5="" src="http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03e21.jpg"></center><br>　　　7.多串几个纸条之后。我们再棉绳的顶和底部都加上塑料杯子的底部。<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937421" md5="" src="http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03e22.jpg"></center><br>　　8.然后再将其向内进行挤压处理，使得中间的结构弯曲。<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937422" md5="" src="http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03e23.jpg"></center><br>　　9.这个时候将弯曲的结构打开<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937423" md5="" src="http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03e24.jpg"></center><br>　　10.为了让这个灯笼看起来更加的漂亮，我们还需要准备一个矩形的纸张。<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937424" md5="" src="http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03e25.jpg"></center><br>　　11.然后将矩形纸张侧面的结构进行剪裁，形成这样的絮状结构。<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937425" md5="" src="http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03f26.jpg"></center><br>　　12.涂抹上适量的白乳胶或者是胶水。<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937426" md5="" src="http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03f27.jpg"></center><br>　　13.接着将其缠绕到灯笼线绳的下方。<br><center><img alt="元宵节灯笼制作 简单环保的灯笼制作（图解）" id="1124937427" md5="" src="http://images.china.cn/attachement/jpg/site1000/20160222/b8aeed9904a81834c03f28.jpg"></center><br>
+</textarea>
+<input type="button" value="批量上传图片" onClick="EESaiPL('nr');">
+</body>
+</html>

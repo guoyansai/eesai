@@ -1,0 +1,1 @@
+﻿<!--#include file="AsaiData/cf.asp"--><!--#include file="AsaiInc/incba.asp"--><!--#include file="AsaiInc/incbu.asp"--><!--#include file="AsaiInc/incindex.asp"--><!--#include file="AsaiInc/incma.asp"-->

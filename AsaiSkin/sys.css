@@ -1,0 +1,26 @@
+/*
+Style Color(Warning:Kepp it for ever.)
+1565C1|1976D3|E3F2FE|F3FAFD|D85F07|E77721|FFE9D9|FFF6E8|228802|33AA02|DCEDC9|F1F8EA|585859|989899|DD0001|FFFFFD
+---------------------------------------------------------------------------------------------------------------
+*/
+@import url(asai_yj.css);
+@import url(asai_fs.css);
+@import url(asai_ic.css);
+@import url(asai_sy.css);
+.sy-k{width:1200px;}
+/**main format**/
+@media (max-width: 760px) {
+.sy-k{margin:0px;width:100%;}
+}
+@media (min-width: 761px) and (max-width: 979px) {
+.sy-k,.sy-ka{margin:0px;width:100%;}
+.sy-cl,.sy-cr{margin:0px 0px 0px 0px;}
+}
+@media (min-width: 980px) {
+.sy-k{width:960px;}
+}
+@media (min-width: 1220px) {
+.sy-k{width:1200px;}
+}
+
+/**down=specail css for this web**/

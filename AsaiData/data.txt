@@ -1,0 +1,37 @@
+20180425
+新建表ees_ai_**，储存表。ai_sn,ai_nr.ai_ot.ai_xt
+ees_ai增加ai_sb储存表ID，移除ai_nr.ai_ot.ai_xt
+
+__________________________________
+ai_ot改为长文本，储存特殊内容，其上增加ai_cs短文本，替换ai_ot
+
+
+ep_ot改为ep_cs用来规常规参数
+ep_fl上增加ep_ot长文本用来设置内容区的参数表名称。
+
+
+20170330
+uy_xy改为uy_zt数字型，重加uy_xy
+
+20170412
+ep_qx上增加ep_qw数字型，投稿权限控制
+
+20170421
+bb_jb改为bb_qx，浏览权限控制类型
+bb_jy改为bb_jj，消耗量，可选填项目。
+
+20170508
+增加ew_ll，论坛列表显示样式
+增加ew_dd，订单处理模式
+增加ew_yz，验证方式
+增加ew_sh，审核方式
+
+
+
+delete  from ees_ef where ef_id not in(select max(a.ef_id) from ees_ef as a group by a.ef_bt)
+删除名称相同的分类
+
+
+删除i_xklt 增加w_chat
+
+20170603 ees_ep的ep_nr 上 增加ep_zs列名

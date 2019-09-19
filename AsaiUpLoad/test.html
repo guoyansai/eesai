@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>添加图片,图片,阿赛工作室</title>
+<meta name="keywords" content="添加图片,图片,阿赛工作室">
+<meta name="description" content="添加图片,图片,阿赛工作室致力于网站建设架构、功能设计开发、服务搭建维护等工作，力争做国内最好的企业、行业与门户网站制造先锋，同时还提供专业的网络IT技术交流与服务。">
+<meta name="copyright" content="阿赛工作室">
+</head>
+<body><h1>阿赛文件上传系统8-演示</h1>
+<form id="AsaiForm" name="AsaiForm" action="" method="post" AUTOCOMPLETE="off">
+<script language="javascript">
+var eupi =0;//设置基数为2
+function eupadd(epgid,epfnm)
+{
+eupi=eupi+1;
+var eupv=document.getElementById("eupadiv");//设置生成表单内容的容器，即放置位置
+var eupmz=document.createElement("input");//建立input标记的内容
+eupmz.type="text";//设置类型
+eupmz.value="图片"+eupi;//设置input值
+eupmz.id=eupmz.name=epgid;//设置id和名称
+eupv.appendChild(eupmz);//在容器里添加
+var eupfi=document.createElement("input");//建立input标记的内容
+eupfi.type="text";//设置类型
+eupfi.id=epgid+eupi;//设置id
+eupfi.name=epgid;//设置名称
+eupv.appendChild(eupfi);//在容器里添加
+var eupfr=document.createElement("iframe");
+eupfr.src="Default.asp?0|1|"+epfnm+"_"+eupi+"|/AsaiUpFile/ESNQ/|0|AsaiForm|"+epgid+eupi+"|0|0|0|0.ees";
+eupfr.frameborder="0";
+eupfr.border="0";
+eupfr.scrolling="no";
+eupfr.width="258";
+eupfr.height="22";
+eupv.appendChild(eupfr);//在容器里添加
+var eupbt=document.createElement("input");//建立input标记内容
+eupbt.type="button";//类型
+eupbt.id=eupbt.name="btn"+eupi;//id和名称
+eupbt.value="删除";//内容值
+eupbt.onclick=function() {//单击调用函数 
+var eupbx=document.getElementById(eupbt.id);//获得相关内容
+eupv.removeChild(eupbx.nextSibling); //remove <BR>//删除
+eupv.removeChild(eupbx.previousSibling); //frm
+eupv.removeChild(eupbx.previousSibling); //file
+eupv.removeChild(eupbx.previousSibling); //filename
+eupv.removeChild(eupbx); //btn
+} 
+eupv.appendChild(eupbt);
+eupv.appendChild(document.createElement("BR")); //打印换行
+}
+
+</script>
+<div id="eupadiv"></div>
+<input type="button" name="Submit" value="添加上传" onClick="eupadd('up','ESNJKUJ0')"><br>
+图片：<input type="text" name="upff" id="uptt" value=""><iframe src="Default.asp?0|1|ESNQB1TXK83|ESNQ/|0|AsaiForm|uptt|0|0|0|0.ees" frameborder=0 scrolling=no width="258" height="22"></iframe><br><br>
+<br><br><br><br><br><br><br><br>
+图片：<input type="text" name="up" id="up" maxlength="200" title="上传封面图片
+(Len<200)" value="" /><iframe src="Default.asp?0|1|ESNQB1TXK83|/AsaiUpFile/ESNQ/|0|AsaiForm|up|0|0|0|0.ees" style="background-color:transparent;" frameborder=0 scrolling=no width="258" height="22"></iframe>
+<br><br>
+大图：<input type="text" name="ot" id="ot" maxlength="200" title="上传原始大图片
+(Len<200)" value="" /><iframe src="Default.asp?0|1|0|1|0|AsaiForm|ot|0|0|0|0.ees" style="background-color:transparent;" frameborder=0 scrolling=no width="258" height="22"></iframe>
+<br><br>
+<input type="submit" class="f-sb f-skx" value="添加">&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" class="f-sb f-skx" value="重置">
+</form>
+<p><br>
+<br>
+《阿赛文件上传系统8》主要功能简介；</p>
+<p>可以指定返回值样式；</p>
+<p>支持加水印与缩略图（采用通用的ASPjepg组件）；</p>
+<p>可以上传图片至指定的硬盘、指定的文件夹中；</p>
+<p>批量上传图片；</p>
+<p>可以兼容所有ASP空间；</p>
+<p>支持三种模式上传，自带支持有组件或无组件上传模式，自由切换；</p>
+<p>独立设置文件，可以显示上传文件格式、大小等；</p>
+<p>支持自行设定上传文件保存位置；</p>
+<p>支持原文件名保存，新建文件名保存等多种保存方式；</p>
+<p>支持cookies传值上传到指定文件夹中（适合整合到一些编辑器中）；</p>
+<p>有权限设置，可以对接所有ASP程序。</p>
+</body>
+</html>
