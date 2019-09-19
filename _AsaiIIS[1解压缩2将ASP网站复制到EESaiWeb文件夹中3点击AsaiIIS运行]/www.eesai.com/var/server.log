@@ -1,0 +1,30 @@
+Mon 29 Jan 10:13:42|listen 0.0.0.0:7777 success
+Mon 29 Jan 10:13:42|listen :::7777 success
+Mon 29 Jan 10:13:42|listen 0.0.0.0:777 success
+Mon 29 Jan 10:13:42|listen :::777 success
+Mon 29 Jan 10:13:42|listen 0.0.0.0:77 success
+Mon 29 Jan 10:13:42|listen :::77 success
+Mon 29 Jan 10:13:47|Cann't listen 0.0.0.0:7,errno=2
+Mon 29 Jan 10:13:47|Cann't listen :::7,errno=2
+Mon 29 Jan 10:13:47|listen 0.0.0.0:3311 success
+Mon 29 Jan 10:13:47|listen :::3311 success
+Mon 29 Jan 10:13:47|Start success [pid=6160].
+Mon 29 Jan 10:13:48|kangle switch to selectex
+Mon 29 Jan 10:13:48|kangle switch to selectex
+Mon 29 Jan 10:13:48|kangle switch to selectex
+Mon 29 Jan 10:13:48|kangle switch to selectex
+Fri 27 Jul 15:58:40|listen 0.0.0.0:7777 success
+Fri 27 Jul 15:58:40|listen :::7777 success
+Fri 27 Jul 15:58:40|listen 0.0.0.0:777 success
+Fri 27 Jul 15:58:40|listen :::777 success
+Fri 27 Jul 15:58:45|Cann't listen 0.0.0.0:77,errno=2
+Fri 27 Jul 15:58:45|Cann't listen :::77,errno=2
+Fri 27 Jul 15:58:45|listen 0.0.0.0:7 success
+Fri 27 Jul 15:58:45|listen :::7 success
+Fri 27 Jul 15:58:45|listen 0.0.0.0:3311 success
+Fri 27 Jul 15:58:45|listen :::3311 success
+Fri 27 Jul 15:58:45|Start success [pid=5916].
+Fri 27 Jul 15:58:46|kangle switch to selectex
+Fri 27 Jul 15:58:46|kangle switch to selectex
+Fri 27 Jul 15:58:46|kangle switch to selectex
+Fri 27 Jul 15:58:46|kangle switch to selectex

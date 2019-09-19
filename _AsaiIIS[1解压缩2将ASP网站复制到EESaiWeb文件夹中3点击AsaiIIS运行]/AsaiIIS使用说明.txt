@@ -1,0 +1,15 @@
+AsaiIIS使用步骤：
+
+①将ASP网站所有文件拷贝到AsaiIIS.exe所在文件夹里同目录下的EESaiWeb文件夹内
+②双击AsaiIIS.exe打开ASP网站调试服务（如果遇上安全阻碍，请选择允许确认），弹出CMD窗口，不要关闭！
+③在浏览器中输入http://127.0.0.1:7777进行访问（7777是调试端口，防止7777端口被占用，还提供777,77,7端口，例如：http://127.0.0.1:777）
+④默认首页文档排序：index.html,index.htm,default.html,index.asp,default.asp,default.htm,admin.asp,login.asp,eesai.asp,www.eesai.com.asp
+⑤网站文件在线管理可以通过在浏览网址后面加上www.eesai.com.asp进入
+
+注意：
+AsaiIIS.exe同目录里面有个隐藏的文件夹www.eesai.com，转移调试位置的时候，需要复制文件夹内所有文件！
+如果需要备份和上传网站，只需上传EESaiWeb文件夹内的网站即可，其他文件不需要上传！
+EESaiWeb文件夹内默认含www.eesai.com.asp和www.eesai.com_gb.asp两个文件，用来管理网站文件的，网站调试工作完成后，建议删除！
+
+
+如果有好的建议和意见，欢迎访问http://www.eesai.com

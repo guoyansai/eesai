@@ -1,0 +1,3 @@
+::1 - - [29/Jan/2018:10:13:48 +0800] "GET http://localhost:7777/www.eesai.com.asp HTTP/1.1" 200 3295 "-" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"[KL]
+::1 - - [27/Jul/2018:15:58:40 +0800] "GET http://localhost:7777/www.eesai.com.asp HTTP/1.1" 200 3279 "-" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"[KL]
+::1 - - [27/Jul/2018:15:58:46 +0800] "GET http://localhost:7777/favicon.ico HTTP/1.1" 404 751 "-" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"[L]
